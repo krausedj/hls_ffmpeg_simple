@@ -1,0 +1,14 @@
+[Unit]
+Description=Copy daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=ffmpeg -i rtsp://<user>:<password>@<address> -c copy -f hls -hls_list_size 50000 -hls_time 5 -hls_flags delete_segments -reset_timestamps 1 <location to save stream.m3u8>
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
